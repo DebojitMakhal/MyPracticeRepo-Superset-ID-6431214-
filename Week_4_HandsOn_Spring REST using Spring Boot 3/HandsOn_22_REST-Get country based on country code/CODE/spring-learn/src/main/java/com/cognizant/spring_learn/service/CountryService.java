@@ -1,0 +1,20 @@
+package com.cognizant.spring_learn.service;
+
+import com.cognizant.spring_learn.model.Country;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class CountryService {
+
+    public Country getCountries(String code) {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("country.xml");
+        List<Country> countries = (List<Country>) context.getBean("country");
+        return countries.stream()
+                .filter(c->c.getCode().equalsIgnoreCase(code))
+                .findFirst()
+                .orElse(null);
+    }
+}
